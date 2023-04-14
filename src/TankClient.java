@@ -13,18 +13,19 @@ public class TankClient extends Frame {
     //这是一张虚拟图片
     Image offScreenImage = null;
 
-    //The paint method does not need to be called and will be automatically called once it is to be redrawn
+    //The paint method does not need to be called
+    // and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
         myTank.draw(g);
     }
 
     public void update(Graphics g) {
-
         if (offScreenImage == null) {
             offScreenImage = this.createImage(GAME_WIDTH,
                     GAME_HEIGHT);
         }
-//拿到这个图片的画笔
+
+        //get the graphics of the picture
         Graphics gOffScreen = offScreenImage.getGraphics();
 
         Color c = gOffScreen.getColor();
@@ -56,20 +57,23 @@ public class TankClient extends Frame {
         TankClient tc = new TankClient();
         tc.launchFrame();
     }
+
     private class PaintThread implements Runnable {
 
         public void run() {
             while (true) {
                 repaint();
-
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+
                 }
             }
         }
+
     }
+
     private class KeyMonitor extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
             myTank.KyePressed(e);
