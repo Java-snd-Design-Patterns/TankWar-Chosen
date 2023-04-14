@@ -5,7 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
-    static final int GAME_WIDTH = 800;
+    public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
     int x = 50, y = 50;
