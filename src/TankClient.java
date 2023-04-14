@@ -78,6 +78,9 @@ public class TankClient extends Frame {
         public void keyPressed(KeyEvent e) {
             myTank.KyePressed(e);
         }
+        public void keyReleased(KeyEvent e) {
+            myTank.kyeReleased(e);
+        }
 
     }
 }
