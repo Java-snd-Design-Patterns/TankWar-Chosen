@@ -8,18 +8,18 @@ public class TankClient extends Frame {
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    Tank myTank = new Tank(50, 50);
-
-    Missile m = new Missile(50, 50, Tank.Direction.R);
+    Tank myTank = new Tank(50, 50, this);
+    Missile m = null;
 
     //这是一张虚拟图片
     Image offScreenImage = null;
 
-    //The paint method does not need to be called
-    // and will be automatically called once it is to be redrawn
+    //The paint method does not need to be called and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
         myTank.draw(g);
-        m.draw(g);
+//必须得有这个判断，不然会出错
+        if (m != null) m.draw(g);
+
     }
 
     public void update(Graphics g) {
@@ -27,8 +27,7 @@ public class TankClient extends Frame {
             offScreenImage = this.createImage(GAME_WIDTH,
                     GAME_HEIGHT);
         }
-
-        //get the graphics of the picture
+//拿到这个图片的画笔
         Graphics gOffScreen = offScreenImage.getGraphics();
 
         Color c = gOffScreen.getColor();
@@ -70,7 +69,6 @@ public class TankClient extends Frame {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-
                 }
             }
         }
@@ -78,13 +76,14 @@ public class TankClient extends Frame {
     }
 
     private class KeyMonitor extends KeyAdapter {
-        public void keyPressed(KeyEvent e) {
-            myTank.KyePressed(e);
-        }
-
         public void keyReleased(KeyEvent e) {
             myTank.kyeReleased(e);
         }
 
+        public void keyPressed(KeyEvent e) {
+            myTank.KyePressed(e);
+        }
+
     }
+
 }
