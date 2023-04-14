@@ -10,6 +10,8 @@ public class TankClient extends Frame {
 
     Tank myTank = new Tank(50, 50);
 
+    Missile m = new Missile(50, 50, Tank.Direction.R);
+
     //这是一张虚拟图片
     Image offScreenImage = null;
 
@@ -17,6 +19,7 @@ public class TankClient extends Frame {
     // and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
         myTank.draw(g);
+        m.draw(g);
     }
 
     public void update(Graphics g) {
@@ -78,6 +81,7 @@ public class TankClient extends Frame {
         public void keyPressed(KeyEvent e) {
             myTank.KyePressed(e);
         }
+
         public void keyReleased(KeyEvent e) {
             myTank.kyeReleased(e);
         }
