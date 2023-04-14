@@ -8,6 +8,10 @@ public class Tank {
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
 
+    //ptDir代表炮筒的方向，默认方向向下
+    private Direction ptDir = Direction.D;
+
+
 //保留TankClient的引用，更方便地使用其中的成员变量
 
     TankClient tc = null;
@@ -43,6 +47,35 @@ public class Tank {
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(c);
 
+        //判断出炮筒的方向，并模拟方向来画出炮筒
+        switch (ptDir) {
+            case L:
+                g.drawLine(x + Tank.WIDTH/2,y + Tank.HEIGHT /2,x,y +Tank.HEIGHT/2);
+                break;
+            case LU:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y);
+                break;
+            case U:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH / 2, y);
+                break;
+            case RU:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH, y);
+                break;
+            case R:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH, y + Tank.HEIGHT / 2);
+                break;
+            case RD:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH, y + Tank.HEIGHT);
+                break;
+            case D:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH / 2, y + Tank.HEIGHT);
+                break;
+            case LD:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y + Tank.HEIGHT);
+                break;
+            case STOP:
+                break;
+        }
         move();
     }
 
@@ -80,7 +113,10 @@ public class Tank {
             case STOP:
                 break;
         }
-    }
+        //将坦克的方向传给炮筒，使炮筒与坦克方向一致
+        if(this.dir != Direction.STOP)
+            this.ptDir = this.dir;
+}
 
     public void KyePressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -143,7 +179,7 @@ public class Tank {
         int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
         int y = this.y + Tank.HEIGHT / 2 - Missile.WIDTH / 2;
 //将Tank现在的位置和方向传递给子弹
-        Missile m = new Missile(x, y, dir);
+        Missile m = new Missile(x, y, ptDir);
         return m;
     }
 }
