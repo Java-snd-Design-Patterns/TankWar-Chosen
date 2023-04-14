@@ -8,26 +8,23 @@ public class TankClient extends Frame {
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    int x = 50, y = 50;
+    Tank myTank = new Tank(50, 50);
 
-    //This is a virtual image
+    //这是一张虚拟图片
     Image offScreenImage = null;
 
-    //The paint method does not need to be called
-    // and will be automatically called once it is to be redrawn
+    //The paint method does not need to be called and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, 30, 30);
-        g.setColor(c);
+        myTank.draw(g);
     }
 
     public void update(Graphics g) {
+
         if (offScreenImage == null) {
             offScreenImage = this.createImage(GAME_WIDTH,
                     GAME_HEIGHT);
         }
-        //get the pen of the picture
+//拿到这个图片的画笔
         Graphics gOffScreen = offScreenImage.getGraphics();
 
         Color c = gOffScreen.getColor();
@@ -44,7 +41,6 @@ public class TankClient extends Frame {
         this.setTitle("TankWar");
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-
                 System.exit(0);
             }
         });
@@ -66,6 +62,7 @@ public class TankClient extends Frame {
         public void run() {
             while (true) {
                 repaint();
+
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -75,25 +72,10 @@ public class TankClient extends Frame {
         }
 
     }
-
     private class KeyMonitor extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            switch (key) {
-                case KeyEvent.VK_LEFT:
-                    x -= 5;
-                    break;
-                case KeyEvent.VK_UP:
-                    y -= 5;
-                    break;
-                case KeyEvent.VK_RIGHT:
-
-                    x += 5;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    y += 5;
-                    break;
-            }
+            myTank.KyePressed(e);
         }
+
     }
 }
