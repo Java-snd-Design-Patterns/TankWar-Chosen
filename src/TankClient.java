@@ -1,9 +1,11 @@
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
-    public static final int GAME_WIDTH = 800;
+    static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
     int x = 50, y = 50;
@@ -18,8 +20,6 @@ public class TankClient extends Frame {
         g.setColor(Color.RED);
         g.fillOval(x, y, 30, 30);
         g.setColor(c);
-
-        y += 5;
     }
 
     public void update(Graphics g) {
@@ -44,13 +44,15 @@ public class TankClient extends Frame {
         this.setTitle("TankWar");
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+
                 System.exit(0);
             }
         });
         this.setResizable(false);
         this.setBackground(Color.GREEN);
-        setVisible(true);
 
+        this.addKeyListener(new KeyMonitor());
+        setVisible(true);
         new Thread(new PaintThread()).start();
     }
 
@@ -74,4 +76,24 @@ public class TankClient extends Frame {
 
     }
 
+    private class KeyMonitor extends KeyAdapter {
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key) {
+                case KeyEvent.VK_LEFT:
+                    x -= 5;
+                    break;
+                case KeyEvent.VK_UP:
+                    y -= 5;
+                    break;
+                case KeyEvent.VK_RIGHT:
+
+                    x += 5;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    y += 5;
+                    break;
+            }
+        }
+    }
 }
