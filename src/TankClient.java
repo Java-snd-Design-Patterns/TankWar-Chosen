@@ -5,9 +5,11 @@ import java.awt.event.WindowEvent;
 public class TankClient extends Frame {
     int x = 50, y = 50;
 
-//The paint method does not need to be called
-// and will be automatically called once it is to be redrawn
+    //This is a virtual image
+    Image offScreenImage = null;
 
+    //The paint method does not need to be called
+    // and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.RED);
@@ -15,6 +17,22 @@ public class TankClient extends Frame {
         g.setColor(c);
 
         y += 5;
+    }
+
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(800, 600);
+        }
+        //Get the paintbrush for this picture
+        Graphics gOffScreen = offScreenImage.getGraphics();
+
+
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.GREEN);
+        gOffScreen.fillRect(0, 0, 800, 600);
+        gOffScreen.setColor(c);
+        print(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
     }
 
     public void launchFrame() {
@@ -44,11 +62,12 @@ public class TankClient extends Frame {
             while (true) {
                 repaint();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
+
 }
