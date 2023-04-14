@@ -11,7 +11,7 @@ public class TankClient extends Frame {
     Tank myTank = new Tank(50, 50, this);
     Missile m = null;
 
-    //这是一张虚拟图片
+    //This is a virtual image
     Image offScreenImage = null;
 
     //The paint method does not need to be called and will be automatically called once it is to be redrawn
