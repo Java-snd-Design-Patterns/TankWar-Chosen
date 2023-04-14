@@ -56,7 +56,6 @@ public class TankClient extends Frame {
         TankClient tc = new TankClient();
         tc.launchFrame();
     }
-
     private class PaintThread implements Runnable {
 
         public void run() {
@@ -70,7 +69,6 @@ public class TankClient extends Frame {
                 }
             }
         }
-
     }
     private class KeyMonitor extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
