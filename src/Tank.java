@@ -43,7 +43,7 @@ public class Tank {
 
     public void draw(Graphics g) {
         Color c = g.getColor();
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(c);
 
