@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+
 public class Tank {
     public static final int XSPEED = 5;
     public static final int YSPEED = 5;
@@ -123,7 +124,7 @@ public class Tank {
         switch (key) {
 //按下Ctrl时作出的动作
             case KeyEvent.VK_CONTROL:
-                tc.m = fire();
+                fire();
                 break;
             case KeyEvent.VK_LEFT:
                 bL = true;
@@ -180,6 +181,9 @@ public class Tank {
         int y = this.y + Tank.HEIGHT / 2 - Missile.WIDTH / 2;
 //将Tank现在的位置和方向传递给子弹
         Missile m = new Missile(x, y, ptDir);
+        //在这里将missile加入到容器里
+        tc.missiles.add(m);
+
         return m;
     }
 }

@@ -3,13 +3,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankClient extends Frame {
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
     Tank myTank = new Tank(50, 50, this);
-    Missile m = null;
+    List<Missile> missiles = new ArrayList<Missile>();
+
 
     //This is a virtual image
     Image offScreenImage = null;
@@ -17,8 +20,11 @@ public class TankClient extends Frame {
     //The paint method does not need to be called and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
         myTank.draw(g);
-//必须得有这个判断，不然会出错
-        if (m != null) m.draw(g);
+        //将容器中的炮弹逐个画出来
+        for (int i = 0;i < missiles.size();i++) {
+            Missile m = missiles.get(i);
+            m.draw(g);
+        }
 
     }
 
