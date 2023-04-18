@@ -180,7 +180,7 @@ public class Tank {
         int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
         int y = this.y + Tank.HEIGHT / 2 - Missile.WIDTH / 2;
 //将Tank现在的位置和方向传递给子弹
-        Missile m = new Missile(x, y, ptDir);
+        Missile m = new Missile(x, y, ptDir,tc);
         //在这里将missile加入到容器里
         tc.missiles.add(m);
 

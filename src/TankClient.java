@@ -17,15 +17,22 @@ public class TankClient extends Frame {
     //This is a virtual image
     Image offScreenImage = null;
 
+
+
     //The paint method does not need to be called and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
+        //看出容器中装了多少炮弹
+        g.drawString("missiles count: " + missiles.size(), 10, 50);
+
         myTank.draw(g);
         //将容器中的炮弹逐个画出来
-        for (int i = 0;i < missiles.size();i++) {
+        for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
             m.draw(g);
+            if (!m.isLive()) missiles.remove(m);
+            else m.draw(g);
         }
-
+        myTank.draw(g);
     }
 
     public void update(Graphics g) {
