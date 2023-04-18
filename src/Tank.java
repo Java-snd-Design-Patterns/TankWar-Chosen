@@ -9,7 +9,7 @@ public class Tank {
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
 
-//保留TankClient的引用，更方便地使用其中的成员变量
+    //保留TankClient的引用，更方便地使用其中的成员变量
     TankClient tc = null;
 
     private int x, y;
@@ -26,6 +26,16 @@ public class Tank {
     //PtDir represents the direction of the barrel, with the default direction pointing downwards
     private Direction ptDir = Direction.D;
 
+    private boolean good;
+
+    public Tank(int x, int y, boolean good, TankClient tc) {
+        this.x = x;
+        this.y = y;
+        this.good = good;
+        this.tc = tc;
+    }
+
+
     public Tank(int x, int y) {
         this.x = x;
         this.y = y;
@@ -39,10 +49,15 @@ public class Tank {
 
     public void draw(Graphics g) {
         Color c = g.getColor();
-        g.setColor(Color.BLUE);
+//以不同的颜色来显示不同的坦克
+        if (good) {
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(Color.BLUE);
+        }
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(c);
-
+        move();
 //判断出炮筒的方向，并模拟方向来画出炮筒
         switch (ptDir) {
             case L:
@@ -191,7 +206,7 @@ public class Tank {
         int y = this.y + Tank.HEIGHT / 2 - Missile.WIDTH / 2;
 //将Tank现在的位置和方向传递给子弹
 //And now the initialization of bullets is no longer determined by the tank, but by the barrel.
-        Missile m = new Missile(x,y,ptDir,tc);
+        Missile m = new Missile(x, y, ptDir, tc);
         tc.missiles.add(m);
         return m;
     }
