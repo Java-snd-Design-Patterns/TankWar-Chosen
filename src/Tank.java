@@ -9,28 +9,22 @@ public class Tank {
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
 
-    //ptDir代表炮筒的方向，默认方向向下
-    private Direction ptDir = Direction.D;
-
-
 //保留TankClient的引用，更方便地使用其中的成员变量
-
     TankClient tc = null;
 
     private int x, y;
 
-//是否按下了4个方向键
-
-    private boolean bL = false,
-            bU = false, bR = false, bD = false;
+    //是否按下了4个方向键
+    private boolean bL = false, bU = false, bR = false, bD = false;
 
     //成员变量：方向
     enum Direction {L, LU, U, RU, R, RD, D, LD, STOP}
 
-    ;
-
     private Direction dir = Direction.STOP;
 
+
+    //PtDir represents the direction of the barrel, with the default direction pointing downwards
+    private Direction ptDir = Direction.D;
 
     public Tank(int x, int y) {
         this.x = x;
@@ -38,7 +32,8 @@ public class Tank {
     }
 
     public Tank(int x, int y, TankClient tc) {
-//调用其它的构造方法this(x, y);
+        this.x = x;
+        this.y = y;
         this.tc = tc;
     }
 
@@ -48,10 +43,10 @@ public class Tank {
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(c);
 
-        //判断出炮筒的方向，并模拟方向来画出炮筒
+//判断出炮筒的方向，并模拟方向来画出炮筒
         switch (ptDir) {
             case L:
-                g.drawLine(x + Tank.WIDTH/2,y + Tank.HEIGHT /2,x,y +Tank.HEIGHT/2);
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y + Tank.HEIGHT / 2);
                 break;
             case LU:
                 g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y);
@@ -66,7 +61,9 @@ public class Tank {
                 g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH, y + Tank.HEIGHT / 2);
                 break;
             case RD:
-                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH, y + Tank.HEIGHT);
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT
+
+                        / 2, x + Tank.WIDTH, y + Tank.HEIGHT);
                 break;
             case D:
                 g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH / 2, y + Tank.HEIGHT);
@@ -77,6 +74,7 @@ public class Tank {
             case STOP:
                 break;
         }
+
         move();
     }
 
@@ -94,7 +92,6 @@ public class Tank {
                 break;
             case RU:
                 x += XSPEED;
-
                 y -= YSPEED;
                 break;
             case R:
@@ -108,24 +105,29 @@ public class Tank {
                 y += YSPEED;
                 break;
             case LD:
+
                 x -= XSPEED;
                 y += YSPEED;
                 break;
             case STOP:
                 break;
         }
-        //将坦克的方向传给炮筒，使炮筒与坦克方向一致
-        if(this.dir != Direction.STOP)
+
+//将坦克的方向传给炮筒，使炮筒与坦克方向一致
+        if (this.dir != Direction.STOP) {
             this.ptDir = this.dir;
-}
+        }
+
+        if (x < 0) x = 0;
+        if (y < 25) y = 25;
+        if (x + Tank.WIDTH > TankClient.GAME_WIDTH) x = TankClient.GAME_WIDTH - Tank.WIDTH;
+        if (y + Tank.HEIGHT > TankClient.GAME_HEIGHT) y = TankClient.GAME_HEIGHT - Tank.HEIGHT;
+
+    }
 
     public void KyePressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
-//按下Ctrl时作出的动作
-            case KeyEvent.VK_CONTROL:
-                fire();
-                break;
             case KeyEvent.VK_LEFT:
                 bL = true;
                 break;
@@ -145,6 +147,13 @@ public class Tank {
     public void kyeReleased(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
+//按下Ctrl时作出动作
+
+//只有当键被抬起来时，这枚炮弹才被发出去
+//避免了一直按下Ctrl而使得子弹过多的问题
+            case KeyEvent.VK_CONTROL:
+                fire();
+                break;
             case KeyEvent.VK_LEFT:
                 bL = false;
                 break;
@@ -162,6 +171,7 @@ public class Tank {
     }
 
 
+    //由按键来定位方向
     void locateDirection() {
         if (bL && !bU && !bR && !bD) dir = Direction.L;
         else if (bL && bU && !bR && !bD) dir = Direction.LU;
@@ -171,19 +181,19 @@ public class Tank {
         else if (!bL && !bU && bR && bD) dir = Direction.RD;
         else if (!bL && !bU && !bR && bD) dir = Direction.D;
         else if (bL && !bU && !bR && bD) dir = Direction.LD;
-        else if (!bL && !bU && !bR && !bD) dir =
-                Direction.STOP;
+        else if (!bL && !bU && !bR && !bD) dir = Direction.STOP;
     }
 
     public Missile fire() {
+
 //保证子弹从Tank的中间出现
         int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
         int y = this.y + Tank.HEIGHT / 2 - Missile.WIDTH / 2;
 //将Tank现在的位置和方向传递给子弹
-        Missile m = new Missile(x, y, ptDir,tc);
-        //在这里将missile加入到容器里
+//And now the initialization of bullets is no longer determined by the tank, but by the barrel.
+        Missile m = new Missile(x,y,ptDir,tc);
         tc.missiles.add(m);
-
         return m;
     }
+
 }

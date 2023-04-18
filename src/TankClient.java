@@ -13,24 +13,20 @@ public class TankClient extends Frame {
     Tank myTank = new Tank(50, 50, this);
     List<Missile> missiles = new ArrayList<Missile>();
 
-
-    //This is a virtual image
+    //这是一张虚拟图片
     Image offScreenImage = null;
-
-
 
     //The paint method does not need to be called and will be automatically called once it is to be redrawn
     public void paint(Graphics g) {
-        //看出容器中装了多少炮弹
+//看出容器中装了多少炮弹
         g.drawString("missiles count: " + missiles.size(), 10, 50);
 
-        myTank.draw(g);
-        //将容器中的炮弹逐个画出来
+//将容器中的炮弹逐个画出来
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
-            m.draw(g);
-            if (!m.isLive()) missiles.remove(m);
-            else m.draw(g);
+            if(!m.isLive())
+                missiles.remove(m);
+                    else m.draw(g);
         }
         myTank.draw(g);
     }
@@ -40,7 +36,8 @@ public class TankClient extends Frame {
             offScreenImage = this.createImage(GAME_WIDTH,
                     GAME_HEIGHT);
         }
-//拿到这个图片的画笔
+//拿到这个图片上的画笔
+
         Graphics gOffScreen = offScreenImage.getGraphics();
 
         Color c = gOffScreen.getColor();
@@ -83,20 +80,20 @@ public class TankClient extends Frame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
             }
         }
 
     }
 
     private class KeyMonitor extends KeyAdapter {
-        public void keyReleased(KeyEvent e) {
-            myTank.kyeReleased(e);
-        }
 
         public void keyPressed(KeyEvent e) {
             myTank.KyePressed(e);
         }
 
+        public void keyReleased(KeyEvent e) {
+            myTank.kyeReleased(e);
+        }
     }
-
 }
