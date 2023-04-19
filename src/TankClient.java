@@ -11,9 +11,6 @@ public class TankClient extends Frame {
     public static final int GAME_HEIGHT = 600;
 
     Tank myTank = new Tank(50, 50, this);
-    //New comes out with an enemy tank
-    Tank enemyTank = new Tank(100, 100,false, this);
-
     List<Missile> missiles = new ArrayList<Missile>();
 
     //这是一张虚拟图片
@@ -27,12 +24,13 @@ public class TankClient extends Frame {
 //将容器中的炮弹逐个画出来
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
-            if(!m.isLive())
-                missiles.remove(m);
-                    else m.draw(g);
+            m.draw(g);
+
+//if(!m.isLive()) missiles.remove(m);
+//else m.draw(g);
+
         }
         myTank.draw(g);
-        enemyTank.draw(g);
     }
 
     public void update(Graphics g) {
@@ -99,5 +97,7 @@ public class TankClient extends Frame {
         public void keyReleased(KeyEvent e) {
             myTank.kyeReleased(e);
         }
+
     }
+
 }
