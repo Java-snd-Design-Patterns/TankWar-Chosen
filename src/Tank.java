@@ -58,10 +58,10 @@ public class Tank {
         Color c = g.getColor();
 
         if(good) {
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);
         }
         else {
-            g.setColor(Color.BLUE);
+            g.setColor(Color.RED);
         }
 
         g.fillOval(x, y, WIDTH, HEIGHT);

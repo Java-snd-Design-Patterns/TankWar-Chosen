@@ -50,7 +50,7 @@ public class TankClient extends Frame {
         Graphics gOffScreen = offScreenImage.getGraphics();
 
         Color c = gOffScreen.getColor();
-        gOffScreen.setColor(Color.GREEN);
+        gOffScreen.setColor(Color.ORANGE);
         gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gOffScreen.setColor(c);
         print(gOffScreen);
@@ -70,7 +70,7 @@ public class TankClient extends Frame {
             }
         });
         this.setResizable(false);
-        this.setBackground(Color.GREEN);
+        this.setBackground(Color.ORANGE);
 
         this.addKeyListener(new KeyMonitor());
 
