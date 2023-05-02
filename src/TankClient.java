@@ -11,21 +11,23 @@ public class TankClient extends Frame {
     public static final int GAME_HEIGHT = 600;
 
     Tank myTank = new Tank(50, 50, true,this);
-    Tank enemyTank = new Tank(100, 100, false, this);
-
+    //Tank enemyTank = new Tank(100, 100, false, this);
+    List<Tank> tanks = new ArrayList<Tank>();
     List<Missile> missiles = new ArrayList<Missile>();
     List<Explode> explodes = new ArrayList<Explode>();
 
     Image offScreenImage = null;
 
     public void paint(Graphics g) {
-        //显示出容器中装了多少炮弹
         g.drawString("missiles count: " + missiles.size(), 10, 50);
-        //显示有多少个爆炸
+
         g.drawString("explodes count: " + explodes.size(), 10,70);
+
+        g.drawString("tanks count: " + tanks.size(), 10, 90);
+
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
-            m.hitTank(enemyTank);
+            m.hitTanks(tanks);
             m.draw(g);
         }
 
@@ -34,9 +36,12 @@ public class TankClient extends Frame {
             e.draw(g);
         }
 
+        for(int i = 0 ;i < tanks.size();i++){
+            tanks.get(i).draw(g);
+        }
 
         myTank.draw(g);
-        enemyTank.draw(g);
+
     }
     public void update(Graphics g) {
         if(offScreenImage == null) {
@@ -45,7 +50,7 @@ public class TankClient extends Frame {
         Graphics gOffScreen = offScreenImage.getGraphics();
 
         Color c = gOffScreen.getColor();
-        gOffScreen.setColor(Color.ORANGE);
+        gOffScreen.setColor(Color.GREEN);
         gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gOffScreen.setColor(c);
         print(gOffScreen);
@@ -53,6 +58,9 @@ public class TankClient extends Frame {
     }
 
     public void launchFrame() {
+        for(int i = 0; i < 10; i++) {
+            tanks.add(new Tank(50 + 40 * (i + 1), 50, false, this));
+        }
         this.setLocation(300, 50);
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
         this.setTitle("TankWar");
@@ -100,5 +108,4 @@ public class TankClient extends Frame {
         }
 
     }
-
 }

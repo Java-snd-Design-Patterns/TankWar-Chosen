@@ -22,6 +22,7 @@ public class Tank {
     public void setLive(boolean b) {
         this.live = b;
     }
+
     public int getX() {
         return x;
     }
@@ -29,6 +30,7 @@ public class Tank {
     public int getY() {
         return y;
     }
+
     enum Direction {L, LU, U, RU, R, RD, D, LD, STOP};
 
     private Direction dir = Direction.STOP;
@@ -56,10 +58,10 @@ public class Tank {
         Color c = g.getColor();
 
         if(good) {
-            g.setColor(Color.BLUE);
+            g.setColor(Color.RED);
         }
         else {
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);
         }
 
         g.fillOval(x, y, WIDTH, HEIGHT);

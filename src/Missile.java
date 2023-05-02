@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Missile {
     public static final int XSPEED = 10;
@@ -14,7 +16,7 @@ public class Missile {
     Tank.Direction dir;
 
     private boolean live = true;
-
+    List<Tank> tanks = new ArrayList<Tank>();
 
     public boolean isLive() {
         return live;
@@ -46,7 +48,6 @@ public class Missile {
 
         move();
     }
-
 
     private void move() {
         switch(dir) {
@@ -81,6 +82,17 @@ public class Missile {
     public Rectangle getRect() {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
+
+    public boolean hitTanks(List<Tank> tanks) {
+        for(int i = 0; i < tanks.size(); i++) {
+            if(hitTank(tanks.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public boolean hitTank(Tank t) {
         if (this.getRect().intersects(t.getRect()) &&
                 t.isLive()) {
@@ -90,10 +102,7 @@ public class Missile {
             Explode e = new Explode(t.getX(), t.getY(), tc); tc.explodes.add(e);
 
             return true;
-
         }
         return false;
     }
-
-
 }
