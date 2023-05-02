@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Tank {
     private int x, y;
+    int oldX,oldY;
 
     int step;
     public static final int XSPEED = 5;
@@ -84,7 +85,6 @@ public class Tank {
             g.setColor(Color.RED);
         }
 
-//        g.setColor(Color.RED)
         g.fillOval(x, y, 30, 30);
         g.setColor(c);
         switch (ptDir) {
@@ -126,6 +126,8 @@ public class Tank {
 
     void move() {
         if(!good) {
+            this.oldX = x;
+            this.oldY = y;
 //Direction.values()将这个枚举类型转为数组Direction[] dirs = Direction.values(); if(step == 0) {
             step = r.nextInt(12) + 3;
             int rn = r.nextInt(dirs.length); dir = dirs[rn];
@@ -166,15 +168,26 @@ public class Tank {
             case STOP:
                 break;
         }
+        if(this.dir != Direction.STOP) {
+            this.ptDir = this.dir;
+            if (x < 0) x = 0;
+            if (y < 25) y = 25;
+            if (x + Tank.WIDTH > TankClient.GAME_WIDTH) x = TankClient.GAME_WIDTH - Tank.WIDTH;
+            if (y + Tank.HEIGHT > TankClient.GAME_HEIGHT) y = TankClient.GAME_HEIGHT - Tank.HEIGHT;
+        }
+    }
 
-        this.ptDir = this.dir;
-
-        if(x < 0) x = 0;
-        if(y < 25) y = 25;
-        if(x + Tank.WIDTH > TankClient.GAME_WIDTH) x = TankClient.GAME_WIDTH - Tank.WIDTH;
-        if(y + Tank.HEIGHT > TankClient.GAME_HEIGHT) y = TankClient.GAME_HEIGHT - Tank.HEIGHT;
-
-
+    public boolean collidesWithWall(Wall w) {
+        if(this.getRect().intersects(w.getRect()) &&
+                this.live) {
+            this.stay();
+            return true;
+        }
+        return false;
+    }
+    private void stay() {
+        x = oldX;
+        y = oldY;
     }
 
 
