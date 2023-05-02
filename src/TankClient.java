@@ -12,6 +12,7 @@ public class TankClient extends Frame {
 
     Tank myTank = new Tank(50, 50, true,this);
 
+    Blood b = new Blood();
     List<Tank> tanks = new ArrayList<Tank>();
     List<Missile> missiles = new ArrayList<Missile>();
     List<Explode> explodes = new ArrayList<Explode>();
@@ -32,6 +33,8 @@ public class TankClient extends Frame {
         }
         w1.draw(g);
         myTank.draw(g);
+        b.draw(g);
+        myTank.eat(b);
         myTank.collidesWithWall(w1);
         myTank.collidesWithTanks(tanks);
 
