@@ -22,7 +22,13 @@ public class Tank {
     public void setLive(boolean b) {
         this.live = b;
     }
+    public int getX() {
+        return x;
+    }
 
+    public int getY() {
+        return y;
+    }
     enum Direction {L, LU, U, RU, R, RD, D, LD, STOP};
 
     private Direction dir = Direction.STOP;

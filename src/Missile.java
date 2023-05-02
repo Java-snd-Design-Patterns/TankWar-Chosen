@@ -82,10 +82,18 @@ public class Missile {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
     public boolean hitTank(Tank t) {
-        if(this.getRect().intersects(t.getRect()) && t.isLive()) {
-            t.setLive(false); this.live = false; return true;
+        if (this.getRect().intersects(t.getRect()) &&
+                t.isLive()) {
+            t.setLive(false);
+            this.live = false;
+            //在这里，以坦克的坐标来画这个爆炸
+            Explode e = new Explode(t.getX(), t.getY(), tc); tc.explodes.add(e);
+
+            return true;
+
         }
         return false;
     }
+
 
 }
