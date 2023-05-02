@@ -31,8 +31,13 @@ public class TankClient extends Frame {
         }
         w1.draw(g);
         myTank.draw(g);
+        myTank.collidesWithWall(w1);
+        myTank.collidesWithTanks(tanks);
+
         for(int i = 0;i<tanks.size();i++){
             tanks.get(i).draw(g);
+            tanks.get(i).collidesWithWall(w1);
+            tanks.get(i).collidesWithTanks(tanks);
         }
 
         for (int i = 0; i < missiles.size(); i++) {
