@@ -39,8 +39,15 @@ public class Tank {
     }
 
     enum Direction {L, LU, U, RU, R, RD, D, LD, STOP}
+    public int getLife() {
+        return life;
+    }
 
-    ;
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    private int life = 100;
     private Direction dir = Direction.D;
 
     private Direction ptDir = Direction.D;
