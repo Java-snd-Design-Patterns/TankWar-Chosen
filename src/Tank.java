@@ -6,8 +6,10 @@ import java.util.Random;
 public class Tank {
     private int x, y;
     int oldX, oldY;
-
     int step;
+
+    private BloodBar bb= new BloodBar();
+
     public static final int XSPEED = 5;
     public static final int YSPEED = 5;
 
@@ -79,6 +81,9 @@ public class Tank {
 
     public void draw(Graphics g) {
         if (!live) return;
+        if(good) {
+            bb.draw(g);
+        }
 
         Color c = g.getColor();
         if (this.good) {
@@ -120,6 +125,16 @@ public class Tank {
 
         move();
 
+    }
+    private class BloodBar {
+        public void draw(Graphics g) {
+            Color c = g.getColor();
+            g.setColor(Color.RED);
+            g.drawRect(x, y - 10, WIDTH, 10);
+            int w = WIDTH * life / 100;
+            g.fillRect(x, y - 10, w, 10);
+            g.setColor(c);
+        }
     }
 
     public Rectangle getRect() {
